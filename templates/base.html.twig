@@ -1,11 +1,23 @@
 <!doctype html>
 <html>
-<head>
-    <title>{% block title %}Blog{% endblock %}</title>
-</head>
-<body>
-{% block body %}
-
-{% endblock body %}
-</body>
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>kevlocal.ca</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+<!--        <link href="/../assets/css/styles.css" rel="stylesheet">-->
+ 
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    </head>
+    <body>
+    	{% block body %}
+		
+		{% endblock %}
+ 
+      	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    </body>
 </html>
