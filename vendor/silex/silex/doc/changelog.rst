@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.3.4 (2015-09-15)
+------------------
+
+* fixed some new deprecations
+* fixed translation registration for the validators
+
 1.3.3 (2015-09-08)
 ------------------
 

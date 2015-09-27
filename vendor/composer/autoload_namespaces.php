@@ -7,6 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'SilexAssetic' => array($vendorDir . '/mheap/silex-assetic/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
+    'Less' => array($vendorDir . '/oyejorge/less.php/lib'),
+    'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );

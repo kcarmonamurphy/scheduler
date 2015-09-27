@@ -40,6 +40,11 @@ class ComposerAutoloaderInit34b928be878c4341d5d9280646eea336
 
         $loader->register(true);
 
+        $includeFiles = require __DIR__ . '/autoload_files.php';
+        foreach ($includeFiles as $file) {
+            composerRequire34b928be878c4341d5d9280646eea336($file);
+        }
+
         return $loader;
     }
 }

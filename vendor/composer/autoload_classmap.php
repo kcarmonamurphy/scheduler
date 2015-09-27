@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
+    'lessc' => $vendorDir . '/oyejorge/less.php/lessc.inc.php',
 );
