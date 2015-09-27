@@ -5,7 +5,8 @@
 		"twig/twig": ">=1.8,<2.0-dev",
         "twbs/bootstrap": "~3.3.5",
 		"mheap/Silex-Assetic": "~1.0",
-		"kriswallsmith/assetic" : "~1.1"
+		"kriswallsmith/assetic" : "~1.1",
+		"mishoo/Uglifyjs" : "*"
 		
     }
 }

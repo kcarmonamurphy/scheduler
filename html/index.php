@@ -5,6 +5,7 @@ require_once __DIR__.'/../app/app.php';
 require_once __DIR__.'/../app/routes.php';
 require_once __DIR__.'/../app/controllers.php';
 require_once __DIR__.'/../app/variables.php';
+require_once __DIR__.'/../app/assets.php';
 
 $app->run();
 
