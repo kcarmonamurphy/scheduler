@@ -910,5 +910,94 @@
             "php",
             "stylesheet"
         ]
+    },
+    {
+        "name": "components/jquery",
+        "version": "2.1.4",
+        "version_normalized": "2.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/components/jquery.git",
+            "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/components/jquery/zipball/7b1d1104656a092423fbfba13c5920e9bbba290c",
+            "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c",
+            "shasum": ""
+        },
+        "time": "2015-05-08 05:04:47",
+        "type": "component",
+        "extra": {
+            "component": {
+                "scripts": [
+                    "jquery.js"
+                ],
+                "files": [
+                    "jquery.min.js",
+                    "jquery.min.map",
+                    "jquery-migrate.js",
+                    "jquery-migrate.min.js"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "John Resig",
+                "email": "jeresig@gmail.com"
+            }
+        ],
+        "description": "jQuery JavaScript Library",
+        "homepage": "http://jquery.com"
+    },
+    {
+        "name": "components/ember",
+        "version": "2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/components/ember.git",
+            "reference": "29e6b076635f2dbde8a5dead7f15f5155a757433"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/components/ember/zipball/29e6b076635f2dbde8a5dead7f15f5155a757433",
+            "reference": "29e6b076635f2dbde8a5dead7f15f5155a757433",
+            "shasum": ""
+        },
+        "require": {
+            "components/jquery": ">=1.7.0, < 2.2.0"
+        },
+        "time": "2015-09-06 21:06:13",
+        "type": "component",
+        "extra": {
+            "component": {
+                "scripts": [
+                    "ember.debug.js"
+                ],
+                "files": [
+                    "ember.debug.js",
+                    "ember.prod.js",
+                    "ember.min.js"
+                ],
+                "shim": {
+                    "exports": "Ember",
+                    "deps": [
+                        "jquery"
+                    ]
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "A framework for creating ambitious web applications."
     }
 ]

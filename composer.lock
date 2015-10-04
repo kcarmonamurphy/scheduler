@@ -4,8 +4,93 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5386c2e397ebe90c4fa4ead0e9069e66",
+    "hash": "56c4fc4d9a55dd9ba1510dc732d8d308",
     "packages": [
+        {
+            "name": "components/ember",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/ember.git",
+                "reference": "29e6b076635f2dbde8a5dead7f15f5155a757433"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/ember/zipball/29e6b076635f2dbde8a5dead7f15f5155a757433",
+                "reference": "29e6b076635f2dbde8a5dead7f15f5155a757433",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.7.0, < 2.2.0"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "ember.debug.js"
+                    ],
+                    "files": [
+                        "ember.debug.js",
+                        "ember.prod.js",
+                        "ember.min.js"
+                    ],
+                    "shim": {
+                        "exports": "Ember",
+                        "deps": [
+                            "jquery"
+                        ]
+                    }
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A framework for creating ambitious web applications.",
+            "time": "2015-09-06 21:06:13"
+        },
+        {
+            "name": "components/jquery",
+            "version": "2.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2015-05-08 05:04:47"
+        },
         {
             "name": "kriswallsmith/assetic",
             "version": "v1.3.0",

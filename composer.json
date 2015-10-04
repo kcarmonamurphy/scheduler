@@ -6,7 +6,8 @@
         "twbs/bootstrap": "~3.3.5",
 		"mheap/Silex-Assetic": "~1.0",
 		"kriswallsmith/assetic" : "~1.1",
-		"mishoo/Uglifyjs" : "*"
+		"components/jquery" : "~2.1.4",
+		"components/ember" : "~2.0.2"
 		
     }
 }
