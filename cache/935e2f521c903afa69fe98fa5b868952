@@ -1,0 +1,12 @@
+$(document).ready(function() {
+	
+	$(".time-cell").click(function() {
+		$(this).addClass("green");
+	});
+});
+
+function paintGreen() {
+	
+	
+	
+}

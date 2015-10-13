@@ -1,0 +1,15 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/docs/assets/js/vendor/autoprefixer.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/package.js",
+        "/Users/kevin/projects/kevlocal/html/js/scripts.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/transition.js",
+        "/Users/kevin/projects/kevlocal/html/js/bootstrap.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tooltip.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tests/vendor/qunit.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tests/unit/tooltip.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tests/unit/tab.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tests/unit/scrollspy.js",
+        "/Users/kevin/projects/kevlocal/vendor/twbs/bootstrap/js/tests/unit/popover.js"
+    ]
+}

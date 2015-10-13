@@ -1,0 +1,27 @@
+$(document).ready(function() {
+	
+	
+	$(".time-cell").mousedown(function() { paintCell("mousedown", this) });
+	$(".time-cell").hover(function() { paintCell("hover", this) });
+	$(document).mouseup(function() { mouseDown = false;});
+
+});
+
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  	mouseDown = true;
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+$("table").oncontextmenu = function () {
+    mouseDown = false;
+	return false;
+}
+
+function paintCell(mode, el) {
+	$(el).css( 'cursor', 'pointer' );
+	if( mode === "mousedown" || (mode === "hover" && mouseDown) ) {//mouseDown){
+	  $(el).addClass("green");
+	}
+}

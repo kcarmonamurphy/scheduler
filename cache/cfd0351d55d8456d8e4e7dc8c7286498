@@ -1,0 +1,31 @@
+$(document).ready(function() {
+	
+	
+	
+	//$(".time-cell").hover(function() { paintCell($(this)) });
+	$(".time-cell").mousedown(function() { paintCell($(this)) });
+	$(".time-cell").hover(function() { paintCell2($(this)) });
+	$(".time-cell").mouseup(function() { mouseDown = false; });
+});
+
+var mouseDown = false;
+	document.body.onmousedown = function() { 
+	  mouseDown = true;
+	}
+	document.body.onmouseup = function() {
+	  mouseDown = false;
+	}
+
+function paintCell(el) {
+	$(el).css( 'cursor', 'pointer' );
+	//if(true) {//mouseDown){
+	  $(el).addClass("green");
+	//}
+}
+
+function paintCell2(el) {
+	$(el).css( 'cursor', 'pointer' );
+	if(mouseDown) {//mouseDown){
+	  $(el).addClass("green");
+	}
+}

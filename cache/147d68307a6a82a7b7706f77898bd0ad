@@ -1,0 +1,42 @@
+$(document).ready(function() {
+	
+	var colour = "green";
+	$(".time-cell").mousedown(function(e) {
+		console.log(e.button);
+		if (e.button === 0) {
+			paintCell("mousedown", this, colour)
+		}
+	});
+	$(".time-cell").hover(function() { 
+		$element.css( 'cursor', 'pointer' );
+		paintCell("hover", this, colour) 
+	});
+	$(document).mouseup(function() { mouseDown = false; });
+});
+
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  	mouseDown = true;
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+document.getElementById("table").oncontextmenu = function () {
+    mouseDown = false;
+	console.log("hello");
+	return false;
+}
+
+function paintCell(mode, el, colour) {
+	$element = $(el);
+	
+	if( mode === "mousedown" || (mode === "hover" && mouseDown) ) {
+		$element.addClass(colour);
+	}
+}
+
+function nukeCell(el) {
+	$element = $(el);
+	$element.removeClass("green");
+
+}

@@ -1,0 +1,24 @@
+$(document).ready(function() {
+	
+	var mouseDown = false;
+	document.body.onmousedown = function() { 
+	  mouseDown = true;
+	}
+	document.body.onmouseup = function() {
+	  mouseDown = false;
+	}
+	
+	$(".time-cell").hover(paintCell);
+	$(".time-cell").click(paintCell);
+	
+
+	
+	
+});
+
+function paintCell(this) {
+	$(this).css( 'cursor', 'pointer' );
+	if(mouseDown){
+	  $(this).addClass("green");
+	}
+}

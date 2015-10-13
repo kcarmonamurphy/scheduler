@@ -1,0 +1,30 @@
+$(document).ready(function() {
+	
+	var colour = "green";
+	$(".time-cell").mousedown(function() { paintCell("mousedown", this, colour) });
+	$(".time-cell").hover(function() { paintCell("hover", this, colour) });
+	$(document).mouseup(function() { mouseDown = false; });
+});
+
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  	mouseDown = true;
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+document.getElementById("table").oncontextmenu = function () {
+    mouseDown = false;
+	console.log("hello");
+	return false;
+}
+
+
+
+function paintCell(mode, el, colour) {
+	$element = $(el);
+	$element.css( 'cursor', 'pointer' );
+	if( mode === "mousedown" || (mode === "hover" && mouseDown) ) {//mouseDown){
+	  $element.addClass(colour);
+	}
+}

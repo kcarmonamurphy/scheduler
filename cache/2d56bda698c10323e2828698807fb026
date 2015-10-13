@@ -1,0 +1,26 @@
+$(document).ready(function() {
+	
+	
+	
+	$(".time-cell").hover(paintCell);
+	$(".time-cell").click(paintCell);
+	
+
+	
+	
+});
+
+var mouseDown = false;
+	document.body.onmousedown = function() { 
+	  mouseDown = true;
+	}
+	document.body.onmouseup = function() {
+	  mouseDown = false;
+	}
+
+function paintCell(el) {
+	$(el).css( 'cursor', 'pointer' );
+	if(mouseDown){
+	  $(el).addClass("green");
+	}
+}

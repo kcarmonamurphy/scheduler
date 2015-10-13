@@ -1,0 +1,19 @@
+$(document).ready(function() {
+	
+	var mouseDown = 0;
+	document.body.onmousedown = function() { 
+	  ++mouseDown;
+	}
+	document.body.onmouseup = function() {
+	  --mouseDown;
+	}
+	
+	$(".time-cell").hover(function() {
+		if(mouseDown){
+		  $(this).addClass("green");
+		}
+	});
+	
+	
+	
+});

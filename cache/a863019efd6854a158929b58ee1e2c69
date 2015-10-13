@@ -1,0 +1,60 @@
+$(document).ready(function() {
+	
+	var colour = "green";
+	$(".time-cell").mousedown(function(e) {
+		$element = $(this);
+		$element.css( 'cursor', 'pointer' );
+		
+	
+		paintCell("mousedown", $element, colour);
+
+	});
+	
+	$(document).on("keydown mousedown", function (e) {
+		if (e.keyCode == 16) {
+			console.log(e.which + " or Shift was pressed");
+		}
+		if (e.shiftKey) {
+		   console.log("shiftkeypressed");
+		}
+	});
+	
+	$(".time-cell").on('contextmenu', function(e) {
+		//console.log(e);
+		return false;
+	});
+	
+	$(".time-cell").hover(function() {
+		$element = $(this);
+		$element.css( 'cursor', 'pointer' );
+		paintCell("hover", $element, colour) 
+	});
+	
+	$(document).mouseup(function() { mouseDown = false; });
+});
+
+//document.getElementById("table").oncontextmenu = function () {
+//    mouseDown = false;
+//	console.log("hello");
+//	return false;
+//}
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  	mouseDown = true;
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+
+
+function paintCell(mode, $element, colour) {
+	if ( mode === "mousedown" || (mode === "hover" && mouseDown) ) {
+		$element.addClass(colour);
+	}
+}
+
+function nukeCell(el) {
+	$element = $(el);
+	$element.removeClass("green");
+
+}

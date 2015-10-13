@@ -1,0 +1,40 @@
+table,
+tr {
+  width: 100%;
+}
+table {
+  table-layout: fixed;
+}
+th,
+td {
+  border: 1px solid white;
+  color: white;
+  text-align: center;
+}
+tr:nth-child(even) {
+  background-color: #eee;
+}
+tr:nth-child(odd) {
+  background-color: #aaa;
+}
+tr.days-of-week,
+td.time-slot {
+  background-color: black;
+}
+td.green {
+  background-color: greenyellow;
+}
+td.yellow {
+  background-color: yellow;
+}
+td.red {
+  background-color: red;
+}
+table {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

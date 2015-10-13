@@ -1,0 +1,17 @@
+table,
+tr {
+  width: 100%;
+}
+td {
+  border: 1px solid black;
+  color: white;
+}
+tr:nth-child(even) {
+  background-color: #999;
+}
+tr:nth-child(odd) {
+  background-color: #555;
+}
+tr.days-of-week {
+  background-color: black;
+}

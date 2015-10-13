@@ -1,0 +1,10 @@
+$(document).ready(function() {
+	
+	buildTable();
+	
+});
+
+function buildTable() {
+	alert('hello');
+	
+}

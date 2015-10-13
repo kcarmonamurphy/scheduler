@@ -1,0 +1,22 @@
+$(document).ready(function() {
+	
+	
+	
+	$(".time-cell").hover(function() { paintCell($(this)) });
+	$(".time-cell").click(function() { paintCell($(this)) });
+});
+
+var mouseDown = false;
+	document.body.onmousedown = function() { 
+	  mouseDown = true;
+	}
+	document.body.onmouseup = function() {
+	  mouseDown = false;
+	}
+
+function paintCell(el) {
+	$(el).css( 'cursor', 'pointer' );
+	if(mouseDown){
+	  $(el).addClass("green");
+	}
+}

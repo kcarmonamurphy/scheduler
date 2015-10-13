@@ -1,9 +1,13 @@
 <?php
 
+
 $app->get('/', function (Silex\Application $app)  { // Match the root route (/) and supply the application as argument
     return $app['twig']->render( // Render the page index.html.twig
         'index.html.twig',
-		array()
+		array(
+			'daysOfWeek' => $app['daysOfWeek'],
+			'timeSlots' => $app['timeSlots'],
+		)
     );
 })->bind('index');
 

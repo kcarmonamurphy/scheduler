@@ -14,7 +14,7 @@ $app['assetic.input.path_to_bootstrap_less']    	= '../vendor/twbs/bootstrap/les
 $app['assetic.input.path_to_js']     				= '../assets/javascript/*.js';  
 $app['assetic.input.path_to_jquery']    			= '../vendor/components/jquery/jquery.min.js';
 $app['assetic.input.path_to_bootstrap_js']    		= '../vendor/twbs/bootstrap/dist/js/bootstrap.min.js';
-$app['assetic.input.path_to_ember_js']    			= '../vendor/components/ember/ember.min.js';
+//$app['assetic.input.path_to_ember_js']    			= '../vendor/components/ember/ember.min.js';
 
 //Outputs
 $app['assetic.output.path_to_css']      			= '../html/css/styles.css';
@@ -22,7 +22,7 @@ $app['assetic.output.path_to_bootstrap_css']      	= '../html/css/bootstrap.css'
 $app['assetic.output.path_to_js']       			= '../html/js/scripts.js';
 $app['assetic.output.path_to_bootstrap_js']       	= '../html/js/bootstrap.js';
 $app['assetic.output.path_to_jquery']       		= '../html/js/jquery.js';
-$app['assetic.output.path_to_ember_js']       		= '../html/js/ember.js';
+//$app['assetic.output.path_to_ember_js']       		= '../html/js/ember.js';
 
 if (isset($app['assetic.enabled']) && $app['assetic.enabled']) {
 	
@@ -89,11 +89,11 @@ if (isset($app['assetic.enabled']) && $app['assetic.enabled']) {
             $am->get('scripts_bootstrap')->setTargetPath($app['assetic.output.path_to_bootstrap_js']);
 			
 			//Scripts Ember
-			$am->set('scripts_ember', new Assetic\Asset\AssetCache(
-                new Assetic\Asset\GlobAsset($app['assetic.input.path_to_ember_js']),
-                new Assetic\Cache\FilesystemCache($app['assetic.path_to_cache'])
-            ));
-            $am->get('scripts_ember')->setTargetPath($app['assetic.output.path_to_ember_js']);
+//			$am->set('scripts_ember', new Assetic\Asset\AssetCache(
+//                new Assetic\Asset\GlobAsset($app['assetic.input.path_to_ember_js']),
+//                new Assetic\Cache\FilesystemCache($app['assetic.path_to_cache'])
+//            ));
+//            $am->get('scripts_ember')->setTargetPath($app['assetic.output.path_to_ember_js']);
 			
             return $am;
         })

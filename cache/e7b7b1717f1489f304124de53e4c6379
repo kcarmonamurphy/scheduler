@@ -1,0 +1,36 @@
+$(document).ready(function() {
+	
+	
+	$(".time-cell").mousedown(function() { paintCell("mousedown", this) });
+	$(".time-cell").hover(function() { paintCell("hover", this) });
+	$(document).mouseup(function() { mouseDown = false;});
+	$(document).mousedown(function() { mouseDown = false;});
+
+
+});
+
+var mouseDown = false;
+document.body.onmousedown = function() { 
+  	mouseDown = true;
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+window.oncontextmenu = function () {
+    mouseDown = false;
+	console.log("hello");
+	return false;
+}
+
+//$(document).mousedown(function(e){ 
+//    if( e.button == 2 ) { 
+//      alert('Right mouse button!'); 
+//      return false; 
+//    } 
+
+function paintCell(mode, el) {
+	$(el).css( 'cursor', 'pointer' );
+	if( mode === "mousedown" || (mode === "hover" && mouseDown) ) {//mouseDown){
+	  $(el).addClass("green");
+	}
+}

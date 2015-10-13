@@ -1,0 +1,7 @@
+$(document).ready(function() {
+	
+	$(".time-cell").mousedown(function() {
+		$(this).addClass("green");
+	});
+	
+});
