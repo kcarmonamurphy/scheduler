@@ -44,6 +44,7 @@ table {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  cursor: cell;
 }
 .navbar-brand {
   font-family: 'Cookie', cursive;

@@ -17,8 +17,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-		<li class="active"><a href="#"><span class="glyphicon glyphicon-plus glyphicon-red"></span></a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-plus glyphicon-yellow"></span></a></li>
+		<li class="glyphicon-container glyphicon-container-red active"><a href="#"><span class="glyphicon glyphicon-plus glyphicon-red"></span></a></li>
+        <li class="glyphicon-container glyphicon-container-amber"><a href="#"><span class="glyphicon glyphicon-plus glyphicon-amber"></span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -31,44 +31,32 @@
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+		
+      <form class="navbar-form navbar-right">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control meeting-name" placeholder="Meeting Name">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-primary">Share with Invitees</button>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+		
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
-	
-
-	<table id="table" class="noselect">
-		<tr class="days-of-week">
-			<th>SCHED</th>
-			{% for day in daysOfWeek %}
-				<th class="day">{{ day }}</th>
-			{% endfor %}
-		</tr>
-		{% for time in timeSlots %}
-		<tr>
-			<td class="time-slot noselect">{{ time }}</td>
-			{% for day in daysOfWeek %}
-				<td class="d#{{loop.index}}_ts#{{loop.parent.loop.index}} time-cell"></td>
-			{% endfor %}
-		</tr>
+<table id="table" class="noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
 		{% endfor %}
-	</table>
+	</tr>
+	{% for time in timeSlots %}
+	<tr>
+		<td class="time-slot noselect">{{ time }}</td>
+		{% for day in daysOfWeek %}
+			<td class="d#{{loop.index}}_ts#{{loop.parent.loop.index}} time-cell"></td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
 {% endblock %}

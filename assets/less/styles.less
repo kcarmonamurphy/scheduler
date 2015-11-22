@@ -1,3 +1,7 @@
+@amber: #FFAA12;
+@red: #FF2C12;
+
+
 table, tr {
 	width:100%;
 }
@@ -24,25 +28,21 @@ tr.days-of-week, td.time-slot {
 	background-color:black;
 }
 
-td.c-green {
-	background-color:greenyellow;
-}
-
-td.c-yellow {
-	background-color:yellow;
+td.c-amber {
+	background-color:@amber;
 }
 
 td.c-red {
-	background-color:red;
+	background-color:@red;
 }
 
-.glyphicon-red {
-	color:red;
+.glyphicon-container-red span {
+	color:@red;
 	font-size:15px;
 }
 
-.glyphicon-yellow {
-	color:#FFC200;
+.glyphicon-container-amber span {
+	color:@amber;
 	font-size:15px;
 }
 
@@ -58,4 +58,9 @@ table {
 .navbar-brand {
 	font-family: 'Cookie', cursive;
 	font-size:34pt;
+	padding-top:20px;
+}
+
+.meeting-name {
+	display:inline-block;
 }

@@ -29,11 +29,11 @@ td.c-amber {
 td.c-red {
   background-color: #ff2c12;
 }
-.glyphicon-container-red span {
+.glyphicon-red {
   color: #ff2c12;
   font-size: 15px;
 }
-.glyphicon-container-amber span {
+.glyphicon-amber {
   color: #ffaa12;
   font-size: 15px;
 }
@@ -48,8 +48,4 @@ table {
 .navbar-brand {
   font-family: 'Cookie', cursive;
   font-size: 34pt;
-  padding-top: 20px;
-}
-.meeting-name {
-  display: inline-block;
 }

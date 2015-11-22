@@ -15,13 +15,13 @@ $(document).ready(function() {
 	});				
 	
 	$("#table").mousedown(function(e) {
-		$element = $(this);
-		chooseCursor(e, $element);
-	});
-	
-	$("#table").hover(function(e) {
-		$element = $(this);
-		chooseCursor(e, $element);
+				$element = $(this);
+
+		if (e.shiftKey || e.button == 2) {
+			$element.css( 'cursor', 'url("css/eraser.png"), cell')
+		} else {
+			$element.css( 'cursor', 'cell' );
+		}
 	});
 	
 	$("#table").mouseup(function(e) {
@@ -29,17 +29,45 @@ $(document).ready(function() {
 		$element.css( 'cursor', 'cell' );
 	});
 	
+	$("#table").hover(function(e) {
+				$element = $(this);
+
+		if (e.shiftKey || e.button == 2) {
+			$element.css( 'cursor', 'url("css/eraser.png"), cell')
+		} else {
+			$element.css( 'cursor', 'cell' );
+		}
+	});
+	
 	$(".time-cell").mousedown(function(e) {
 		$element = $(this);
-		modifyCell(e, $element, colour);
+		
+		if (e.shiftKey || e.button == 2) {
+			//$element.css( 'cursor', 'url("css/eraser.png"), cell')
+		   	nukeCell("mousedown", $element);
+		} else {
+			//$element.css( 'cursor', 'cell' );
+			paintCell("mousedown", $element, colour);	
+		}
 	});
 	
 	$(".time-cell").hover( function(e) {
 		$element = $(this);
-		modifyCell(e, $element, colour);
+		
+		if (e.shiftKey || e.button == 2) {
+			//$element.css( 'cursor', 'url("css/eraser.png"), cell')
+		   	nukeCell("hover", $element);
+		} else {
+			//$element.css( 'cursor', 'cell' );
+			paintCell("hover", $element, colour);
+		}
 	});
 	
 	$(document).mouseup(function() { mouseDown = false; });
+});
+
+$(".time-cell").on('contextmenu', function(e) {
+	return false;
 });
 
 $("#table").on('contextmenu', function(e) {
@@ -63,33 +91,18 @@ document.body.oncontextmenu = function() {
 
 //FUNCTIONS
 
-function chooseCursor(event, element) {
-	if (event.shiftKey || event.button == 2) {
-		element.css( 'cursor', 'url("css/eraser.png") 10 10, cell')
-	} else {
-		element.css( 'cursor', 'cell' );
-	}
-}
-
-function modifyCell(event, element, colour) {
-	if (event.shiftKey || event.button == 2) {
-		nukeCell(event.type, $element);
-	} else {
-		paintCell(event.type, $element, colour);	
-	}
-}
-
 function paintCell(mode, $element, colour) {
 	nukeCell(mode, $element);
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || (mode === "hover" && mouseDown) ) {
 		$element.addClass("c-" + colour);
 	}
 }
 
 function nukeCell(mode, $element) {
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || (mode === "hover" && mouseDown) ) {
 		$element.removeClass(function (index, css) {
-			return (css.match (/(^|\s)c-\S+/g) || []).join(' ');
-		});
+    return (css.match (/(^|\s)c-\S+/g) || []).join(' ');
+});
 	}
+
 }

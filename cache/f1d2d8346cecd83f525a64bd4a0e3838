@@ -48,8 +48,4 @@ table {
 .navbar-brand {
   font-family: 'Cookie', cursive;
   font-size: 34pt;
-  padding-top: 20px;
-}
-.meeting-name {
-  display: inline-block;
 }

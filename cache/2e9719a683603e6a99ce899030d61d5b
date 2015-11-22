@@ -1,32 +1,40 @@
 $(document).ready(function() {
 	
-	var colour = "green";
-	$("li .glyphicon-red").click(function() {
+	var colour = "red";
+	
+	$("li.glyphicon-container-red").click(function() {
+		$(".glyphicon-container").each(function() { $(this).removeClass("active") });
+		$(this).addClass("active");
 		colour = "red";
 	});
 								
-	$("li .glyphicon-yellow").click(function() {
-		colour = "yellow";
+	$("li.glyphicon-container-amber").click(function() {
+		$(".glyphicon-container").each(function() { $(this).removeClass("active") });
+		$(this).addClass("active");
+		colour = "amber";
 	});				
 	
 	$(".time-cell").mousedown(function(e) {
 		$element = $(this);
-		$element.css( 'cursor', 'pointer' );
 		
 		if (e.shiftKey || e.button == 2) {
+			$element.css( 'cursor', 'url("css/eraser.png"), pointer')
 		   	nukeCell("mousedown", $element);
 		} else {
+			$element.css( 'cursor', 'cell' );
 			paintCell("mousedown", $element, colour);
+			
 		}
 	});
 	
 	$(".time-cell").hover( function(e) {
 		$element = $(this);
-		$element.css( 'cursor', 'pointer' );
 		
 		if (e.shiftKey || e.button == 2) {
+			//$element.css( 'cursor', 'url("css/eraser.png"), pointer')
 		   	nukeCell("hover", $element);
 		} else {
+			$element.css( 'cursor', 'cell' );
 			paintCell("hover", $element, colour);
 		}
 	});
@@ -38,13 +46,22 @@ $(".time-cell").on('contextmenu', function(e) {
 	return false;
 });
 
+//MOUSEDOWN EVENTS
+
 var mouseDown = false;
-document.body.onmousedown = function() { 
+document.body.onmousedown = function() {
   	mouseDown = true;
+
 }
 document.body.onmouseup = function() {
   	mouseDown = false;
 }
+
+document.body.oncontextmenu = function() {
+  	mouseDown = false;
+}
+
+//FUNCTIONS
 
 function paintCell(mode, $element, colour) {
 	nukeCell(mode, $element);

@@ -24,17 +24,17 @@ td.time-slot {
   background-color: black;
 }
 td.c-amber {
-  background-color: #ffaa12;
+  background-color: #ffb93e;
 }
 td.c-red {
-  background-color: #ff2c12;
+  background-color: #ff4d3e;
 }
-.glyphicon-container-red span {
-  color: #ff2c12;
+.glyphicon-red {
+  color: #ff4d3e;
   font-size: 15px;
 }
-.glyphicon-container-amber span {
-  color: #ffaa12;
+.glyphicon-amber {
+  color: #ffb93e;
   font-size: 15px;
 }
 table {
@@ -48,8 +48,4 @@ table {
 .navbar-brand {
   font-family: 'Cookie', cursive;
   font-size: 34pt;
-  padding-top: 20px;
-}
-.meeting-name {
-  display: inline-block;
 }

@@ -14,12 +14,7 @@ $(document).ready(function() {
 		colour = "amber";
 	});				
 	
-	$("#table").mousedown(function(e) {
-		$element = $(this);
-		chooseCursor(e, $element);
-	});
-	
-	$("#table").hover(function(e) {
+	$("#table").on("mousedown", "hover", function(e) {
 		$element = $(this);
 		chooseCursor(e, $element);
 	});
@@ -27,6 +22,11 @@ $(document).ready(function() {
 	$("#table").mouseup(function(e) {
 		$element = $(this);
 		$element.css( 'cursor', 'cell' );
+	});
+	
+	$("#table").hover(function(e) {
+		$element = $(this);
+		chooseCursor(e, $element);
 	});
 	
 	$(".time-cell").mousedown(function(e) {
@@ -40,6 +40,10 @@ $(document).ready(function() {
 	});
 	
 	$(document).mouseup(function() { mouseDown = false; });
+});
+
+$(".time-cell").on('contextmenu', function(e) {
+	return false;
 });
 
 $("#table").on('contextmenu', function(e) {
@@ -81,13 +85,13 @@ function modifyCell(event, element, colour) {
 
 function paintCell(mode, $element, colour) {
 	nukeCell(mode, $element);
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || ((mode ==="mouseenter" || mode==="mouseleave") && mouseDown) ) {
 		$element.addClass("c-" + colour);
 	}
 }
 
 function nukeCell(mode, $element) {
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || ((mode ==="mouseenter" || mode==="mouseleave") && mouseDown) ) {
 		$element.removeClass(function (index, css) {
 			return (css.match (/(^|\s)c-\S+/g) || []).join(' ');
 		});

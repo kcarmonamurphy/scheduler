@@ -51,5 +51,6 @@ table {
   padding-top: 20px;
 }
 .meeting-name {
-  display: inline-block;
+  display: inline;
+  width: 100%;
 }

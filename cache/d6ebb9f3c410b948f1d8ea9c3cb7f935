@@ -50,6 +50,3 @@ table {
   font-size: 34pt;
   padding-top: 20px;
 }
-.meeting-name {
-  display: inline-block;
-}

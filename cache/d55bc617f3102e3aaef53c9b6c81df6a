@@ -42,6 +42,10 @@ $(document).ready(function() {
 	$(document).mouseup(function() { mouseDown = false; });
 });
 
+//$(".time-cell").on('contextmenu', function(e) {
+//	return false;
+//});
+
 $("#table").on('contextmenu', function(e) {
 	return false;
 });
@@ -81,13 +85,13 @@ function modifyCell(event, element, colour) {
 
 function paintCell(mode, $element, colour) {
 	nukeCell(mode, $element);
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || ((mode ==="mouseenter" || mode==="mouseleave") && mouseDown) ) {
 		$element.addClass("c-" + colour);
 	}
 }
 
 function nukeCell(mode, $element) {
-	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+	if ( mode === "mousedown" || ((mode ==="mouseenter" || mode==="mouseleave") && mouseDown) ) {
 		$element.removeClass(function (index, css) {
 			return (css.match (/(^|\s)c-\S+/g) || []).join(' ');
 		});
