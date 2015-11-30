@@ -22,8 +22,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">30 minute intervals</a></li>
-            <li><a href="#">1 hour intervals</a></li>
+            <li id="half-hour-interval"><a href="#">30 minute intervals</a></li>
+            <li id="hour-interval"><a href="#">1 hour intervals</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">Show weekend</a></li>
             <li role="separator" class="divider"></li>
@@ -43,6 +43,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<div id="slider-range"></div>
+
 <table id="table" class="noselect">
 	<tr class="days-of-week">
 		<th>SCHED</th>
@@ -51,12 +53,13 @@
 		{% endfor %}
 	</tr>
 	{% for time in timeSlots %}
-	<tr>
+	<tr class="time-slot-row" id="time-slot{{loop.index-1}}" >
 		<td class="time-slot noselect">{{ time }}</td>
 		{% for day in daysOfWeek %}
-			<td class="d#{{loop.index}}_ts#{{loop.parent.loop.index}} time-cell"></td>
+			<td class="d#{{loop.index-1}}_ts#{{loop.parent.loop.index-1}} time-cell"></td>
 		{% endfor %}
 	</tr>
 	{% endfor %}
+	<tr class="grabber-bottom"></tr>
 </table>
 {% endblock %}

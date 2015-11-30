@@ -1,0 +1,110 @@
+$(document).ready(function() {
+	$( "#slider-range" ).slider({
+      orientation: "horizontal",
+      range: true,
+      values: [ 17, 67 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+});
+var mouseDown = false;
+
+$(document).ready(function() {
+	
+	var colour = "red";
+	
+	$("li.glyphicon-container-red").click(function() {
+		$(".glyphicon-container").each(function() { $(this).removeClass("active") });
+		$(this).addClass("active");
+		colour = "red";
+	});
+								
+	$("li.glyphicon-container-amber").click(function() {
+		$(".glyphicon-container").each(function() { $(this).removeClass("active") });
+		$(this).addClass("active");
+		colour = "amber";
+	});				
+	
+	$("#table").mousedown(function(e) {
+		$element = $(this);
+		chooseCursor(e, $element);
+	});
+	
+	$("#table").hover(function(e) {
+		$element = $(this);
+		chooseCursor(e, $element);
+	});
+	
+	$("#table").mouseup(function(e) {
+		$element = $(this);
+		$element.css( 'cursor', 'cell' );
+	});
+	
+	$(".time-cell").mousedown(function(e) {
+		$element = $(this);
+		modifyCell(e, $element, colour);
+	});
+	
+	$(".time-cell").hover( function(e) {
+		$element = $(this);
+		modifyCell(e, $element, colour);
+	});
+	
+	$(document).mouseup(function() { 
+		mouseDown = false; 
+	});
+});
+
+$("#table").on('contextmenu', function(e) {
+	return false;
+});
+
+//MOUSEDOWN EVENTS
+
+document.body.onmousedown = function() {
+  	mouseDown = true;
+
+}
+document.body.onmouseup = function() {
+  	mouseDown = false;
+}
+
+document.body.oncontextmenu = function() {
+  	mouseDown = false;
+}
+
+//FUNCTIONS
+
+function chooseCursor(event, element) {
+	if (event.shiftKey || event.button == 2) {
+		element.css( 'cursor', 'url("css/eraser.png") 10 10, cell')
+	} else {
+		element.css( 'cursor', 'cell' );
+	}
+}
+
+function modifyCell(event, element, colour) {
+	if (event.shiftKey || event.button == 2) {
+		nukeCell(event.type, $element);
+	} else {
+		paintCell(event.type, $element, colour);	
+	}
+}
+
+function paintCell(mode, $element, colour) {
+	nukeCell(mode, $element);
+	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+		$element.addClass("c-" + colour);
+	}
+}
+
+function nukeCell(mode, $element) {
+	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
+		$element.removeClass(function (index, css) {
+			return (css.match (/(^|\s)c-\S+/g) || []).join(' ');
+		});
+	}
+}
