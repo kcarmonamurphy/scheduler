@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var default_values = [18, 38];
+	var default_values = [19, 39];
 	var range = { min: 0, max: 48 }
 	
 	$( "#slider-range" ).slider({
@@ -31,13 +31,13 @@ function alterVisibleTimeSlots(ui, range) {
 	console.log(ui.values[0], ui.values[1], range);
 
 	for (i = range.min; i < range.max; i++) {
-		$( "tr#time-slot" + i).show();
+		$( "tr.time-slot" + i).show();
 	}
 	for (i = range.min; i < ui.values[0]; i++) {
-		$( "tr#time-slot" + i).hide();
+		$( "tr.time-slot" + i).hide();
 	}
 	for (i = range.max; i >= ui.values[1]; i--) {
-		$( "tr#time-slot" + i).hide();
+		$( "tr.time-slot" + i).hide();
 	}
   
 }

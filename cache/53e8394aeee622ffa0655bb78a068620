@@ -1,0 +1,88 @@
+#slider-range {
+  width: 100%;
+  margin: 10px 0;
+}
+.ui-widget-header {
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+}
+.ui-widget-content {
+  background: repeating-linear-gradient(-55deg, #666666, #777777 10px, #444444 10px, #555555 20px);
+}
+tr.time-slot-row {
+  display: none;
+}
+table,
+tr {
+  width: 100%;
+}
+table {
+  table-layout: fixed;
+  display: none;
+}
+th,
+td {
+  border: 1px solid white;
+  color: white;
+  text-align: center;
+}
+.full-cell td {
+  height: 38px;
+}
+.half-cell td {
+  height: 20px;
+}
+.half-cell tr:nth-child(4n+1),
+.half-cell tr:nth-child(4n+2) {
+  background-color: #eee;
+}
+.half-cell tr:nth-child(4n+3),
+.half-cell tr:nth-child(4n+4) {
+  background-color: #aaa;
+}
+.full-cell tr:nth-child(2n) {
+  background-color: #eee;
+}
+.full-cell tr:nth-child(2n+1) {
+  background-color: #aaa;
+}
+tr:nth-child(2n) {
+  font-size: 20px;
+}
+table tr.days-of-week,
+td.time-slot {
+  background-color: black !important;
+  cursor: default;
+}
+td.c-amber {
+  background-color: #ffaa12;
+}
+td.c-red {
+  background-color: #ff2c12;
+}
+.glyphicon-container-red span {
+  color: #ff2c12;
+  font-size: 15px;
+}
+.glyphicon-container-amber span {
+  color: #ffaa12;
+  font-size: 15px;
+}
+table {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.navbar-brand {
+  font-family: 'Cookie', cursive;
+  font-size: 34pt;
+  padding-top: 20px;
+}
+.meeting-name {
+  display: inline-block;
+}
+.navbar {
+  margin-bottom: 0px;
+}

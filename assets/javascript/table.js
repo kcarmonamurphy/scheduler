@@ -16,17 +16,17 @@ $(document).ready(function() {
 		colour = "amber";
 	});				
 	
-	$("#table").mousedown(function(e) {
+	$("table").mousedown(function(e) {
 		$element = $(this);
 		chooseCursor(e, $element);
 	});
 	
-	$("#table").hover(function(e) {
+	$("table").hover(function(e) {
 		$element = $(this);
 		chooseCursor(e, $element);
 	});
 	
-	$("#table").mouseup(function(e) {
+	$("table").mouseup(function(e) {
 		$element = $(this);
 		$element.css( 'cursor', 'cell' );
 	});
@@ -46,7 +46,7 @@ $(document).ready(function() {
 	});
 });
 
-$("#table").on('contextmenu', function(e) {
+$("table").on('contextmenu', function(e) {
 	return false;
 });
 
@@ -86,6 +86,7 @@ function paintCell(mode, $element, colour) {
 	nukeCell(mode, $element);
 	if ( mode === "mousedown" || ((mode === "mouseenter" || mode === "mouseleave") && mouseDown) ) {
 		$element.addClass("c-" + colour);
+		$element.addClass("modified");
 	}
 }
 

@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
+<div id="meeting-name-error" class="alert alert-danger hidden" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Please enter a meeting name</span>
+	  Please enter a meeting name
+</div>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,30 +28,71 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li id="half-hour-interval"><a href="#">30 minute intervals</a></li>
-            <li id="hour-interval"><a href="#">1 hour intervals</a></li>
+            <li class="active" id="half-hour-interval"><a href="#">30 minute intervals</a></li>
+            <li id="hour-interval-hour"><a href="#">1 hour intervals on the hour</a></li>
+			<li id="hour-interval-half-hour"><a href="#">1 hour intervals on the half hour</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Show weekend</a></li>
+            <li class="active" id="show-hide-weekend"><a href="#">Show weekend</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Start/end day</a></li>
+            <li><a href="#">Import from Google Calendar</a></li>
           </ul>
         </li>
       </ul>
 		
       <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control meeting-name" placeholder="Meeting Name">
+        <div class="form-group" id="meeting-name">
+          <input type="text" class="form-control" placeholder="Meeting Name">
         </div>
-        <button type="submit" class="btn btn-primary">Share with Invitees</button>
+		  <button type="submit" id="sendToInvitees" class="btn btn-primary" data-toggle="modal" data-target="#sendToInviteesModal">Share with Invitees</button>
       </form>
 		
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="sendToInviteesModal" tabindex="-1" role="dialog" aria-labelledby="sendToInviteesModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Send To Invitees</h4>
+      </div>
+      <div class="modal-body">
+        <div id="email-error" class="alert alert-danger hidden" role="alert">
+		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		  <span class="sr-only">Error:</span>
+		  You must enter your email address, as well as at least one other...
+		</div>
+		<form>
+			 <div class="form-group">
+			<label for="exampleInputEmail1">Your email address</label>
+			<input type="email" class="form-control" id="email0" placeholder="Your email">
+			</div>
+		  <div class="form-group">
+			  
+			<label for="exampleInputEmail1">Include up to 7 email addresses</label>
+			<div class="form-group"><input type="email" class="form-control" id="email1" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email2" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email3" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email4" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email5" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email6" placeholder="Email"></div>
+			  <div class="form-group"><input type="email" class="form-control" id="email7" placeholder="Email"></div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="sendInviteesSubmit" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="slider-range"></div>
 
-<table id="table" class="noselect">
+<table id="table-half-hour" class="half-cell noselect">
 	<tr class="days-of-week">
 		<th>SCHED</th>
 		{% for day in daysOfWeek %}
@@ -53,13 +100,50 @@
 		{% endfor %}
 	</tr>
 	{% for time in timeSlots %}
-	<tr class="time-slot-row" id="time-slot{{loop.index-1}}" >
+	<tr class="time-slot-row time-slot{{loop.index-1}}" >
 		<td class="time-slot noselect">{{ time }}</td>
 		{% for day in daysOfWeek %}
-			<td class="d#{{loop.index-1}}_ts#{{loop.parent.loop.index-1}} time-cell"></td>
+			<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
 		{% endfor %}
 	</tr>
 	{% endfor %}
-	<tr class="grabber-bottom"></tr>
+</table>
+
+<table id="table-hour-on-hour" class="full-cell noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
+		{% endfor %}
+	</tr>
+	{% for time in timeSlots %}
+		{% if (loop.index-1) is divisibleby(2) %}
+			<tr class="time-slot-row time-slot{{loop.index-1}}" >
+				<td class="time-slot noselect">{{ time }}</td>
+				{% for day in daysOfWeek %}
+					<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
+				{% endfor %}
+			</tr>
+		{% endif %}
+	{% endfor %}
+</table>
+
+<table id="table-hour-on-half-hour" class="full-cell noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
+		{% endfor %}
+	</tr>
+	{% for time in timeSlots %}
+		{% if loop.index is divisibleby(2) %}
+			<tr class="time-slot-row time-slot{{loop.index-1}}" >
+				<td class="time-slot noselect">{{ time }}</td>
+				{% for day in daysOfWeek %}
+					<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
+				{% endfor %}
+			</tr>
+		{% endif %}
+	{% endfor %}
 </table>
 {% endblock %}
