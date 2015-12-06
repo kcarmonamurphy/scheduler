@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	$("#sendToInvitees").click(function() {
+	$("#sendToInvitees").click(function(e) {
+		e.preventDefault();
 		var value = $.trim($("#meeting-name input").val());
 		if (value.length == 0) {
 			$("#meeting-name input").focus();
@@ -9,6 +10,7 @@ $(document).ready(function() {
 		} else {
 			$("#meeting-name").removeClass("has-error");
 			$("#meeting-name-error").addClass("hidden");
+			$("#modal-title-insert").html($("#meeting-name input").val());
 		}				 
 	});
 	
@@ -27,6 +29,7 @@ $(document).ready(function() {
 		$(this).keyup(function(el) {
 			validateEmail(this);
 		});
+		$(this).change();
 	})
 
 	$("#sendInviteesSubmit").click(function() {
@@ -38,10 +41,10 @@ $(document).ready(function() {
 		});
 		
 		if (email0Success && totalEmailSuccess > 1) {
-			console.log("submit");
-			$("#email-error").addClass("hidden");
+			submit();
+			$("#form-error-email").addClass("hidden");
 		} else {
-			$("#email-error").removeClass("hidden");
+			$("#form-error-email").removeClass("hidden");
 			return false;
 		}
 

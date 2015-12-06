@@ -147,9 +147,9 @@ $(document).ready(function() {
 		
 		if (email0Success && totalEmailSuccess > 1) {
 			submit();
-			$("#form-error-email").addClass("hidden");
+			$("#email-error").addClass("hidden");
 		} else {
-			$("#form-error-email").removeClass("hidden");
+			$("#email-error").removeClass("hidden");
 			return false;
 		}
 
@@ -251,7 +251,6 @@ function submit() {
 		bottom_range: bottom_range,
 		meeting_name: meeting_name,
 		emails: emails,
-		current_table: window.current_table,
 	}
 	
 	$.ajax({

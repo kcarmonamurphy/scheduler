@@ -134,7 +134,6 @@ $(document).ready(function() {
 		$(this).keyup(function(el) {
 			validateEmail(this);
 		});
-		$(this).change();
 	})
 
 	$("#sendInviteesSubmit").click(function() {
@@ -147,9 +146,9 @@ $(document).ready(function() {
 		
 		if (email0Success && totalEmailSuccess > 1) {
 			submit();
-			$("#form-error-email").addClass("hidden");
+			$("#email-error").addClass("hidden");
 		} else {
-			$("#form-error-email").removeClass("hidden");
+			$("#email-error").removeClass("hidden");
 			return false;
 		}
 
@@ -222,7 +221,7 @@ function alterVisibleTimeSlots(ui, range) {
 function submit() {
 	console.log("submit");
 	
-	var meeting_name = $("#meeting-name input").val();
+	var meeting_name = $("#meeting-name input");
 	var emails = new Array();
 	$("[id^=email]").each(function(index, el) {
 		if ($(this).parent(".form-group").hasClass("has-success"))
@@ -250,20 +249,19 @@ function submit() {
 		top_range: top_range,
 		bottom_range: bottom_range,
 		meeting_name: meeting_name,
-		emails: emails,
-		current_table: window.current_table,
+		emails: emails
 	}
 	
 	$.ajax({
 		type: "POST",
 		url: "/newmeeting",
+		data: {hello: "hi"},
 		success: function(data) {
 		  $("#sendToInviteesModal .modal-body").html(data);
 		},
 		error: function(err) {
-			$("#sendToInviteesModal .modal-body").html(err);
+			$("#sendToInviteesModal .modal-body").html(data);
 		},
- 		data: object,
 	});
 }
 var mouseDown = false;
