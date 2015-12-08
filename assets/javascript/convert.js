@@ -8,6 +8,7 @@ $(document).ready(function() {
 		affectTable("#table-hour-on-hour", cellList, 0);
 		window.current_table = "#table-hour-on-hour";
 		toggleTableLink(this);
+		changeSliderNotifications();
 	});
 	
 	$("#half-hour-interval").click(function(el) {
@@ -15,6 +16,7 @@ $(document).ready(function() {
 		affectTable("#table-half-hour", cellList, 1);
 		window.current_table = "#table-half-hour";
 		toggleTableLink(this);
+		changeSliderNotifications();
 	});
 	
 	$("#hour-interval-half-hour").click(function(el) {
@@ -22,6 +24,7 @@ $(document).ready(function() {
 		affectTable("#table-hour-on-half-hour", cellList, 1);
 		window.current_table = "#table-hour-on-half-hour";
 		toggleTableLink(this);
+		changeSliderNotifications();
 	});
 	
 	$("#show-hide-weekend").click(function(el) {

@@ -11,11 +11,13 @@ $(document).ready(function() {
 		values: default_values,
       slide: function(event, ui) {
 		  alterVisibleTimeSlots(ui, range);
+		  changeSliderNotifications(ui);
 	  }
     });
 
 	var ui = { values: [default_values[0], default_values[1]] }
 	alterVisibleTimeSlots(ui, range);
+	changeSliderNotifications();
 	
 	$("#half-hour-interval").click(function() {
 		for (i = range.min; i < range.max; i++) {
@@ -25,6 +27,11 @@ $(document).ready(function() {
 	});
 	
 });
+
+function changeSliderNotifications() {
+	$(".range-left").html($("tr.time-slot-row:visible").first().find(".time-slot").html());
+	$(".range-right").html($("tr.time-slot-row:visible").last().next().find(".time-slot").html());
+}
 
 function alterVisibleTimeSlots(ui, range) {
 

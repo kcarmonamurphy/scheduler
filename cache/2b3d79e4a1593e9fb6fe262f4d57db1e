@@ -8,7 +8,6 @@ $(document).ready(function() {
 		affectTable("#table-hour-on-hour", cellList, 0);
 		window.current_table = "#table-hour-on-hour";
 		toggleTableLink(this);
-		changeSliderNotifications();
 	});
 	
 	$("#half-hour-interval").click(function(el) {
@@ -16,7 +15,6 @@ $(document).ready(function() {
 		affectTable("#table-half-hour", cellList, 1);
 		window.current_table = "#table-half-hour";
 		toggleTableLink(this);
-		changeSliderNotifications();
 	});
 	
 	$("#hour-interval-half-hour").click(function(el) {
@@ -24,7 +22,6 @@ $(document).ready(function() {
 		affectTable("#table-hour-on-half-hour", cellList, 1);
 		window.current_table = "#table-hour-on-half-hour";
 		toggleTableLink(this);
-		changeSliderNotifications();
 	});
 	
 	$("#show-hide-weekend").click(function(el) {
@@ -221,7 +218,7 @@ $(document).ready(function() {
 
 	var ui = { values: [default_values[0], default_values[1]] }
 	alterVisibleTimeSlots(ui, range);
-	changeSliderNotifications();
+	changeSliderNotifications(ui);
 	
 	$("#half-hour-interval").click(function() {
 		for (i = range.min; i < range.max; i++) {
@@ -232,7 +229,7 @@ $(document).ready(function() {
 	
 });
 
-function changeSliderNotifications() {
+function changeSliderNotifications(ui) {
 	$(".range-left").html($("tr.time-slot-row:visible").first().find(".time-slot").html());
 	$(".range-right").html($("tr.time-slot-row:visible").last().next().find(".time-slot").html());
 }
