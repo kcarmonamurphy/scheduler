@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	$("#sendToInvitees").click(function(e) {
 		e.preventDefault();
-		var value = $.trim($("#meeting-name input").val());
-		if (value.length == 0) {
+		var meeting_name = $.trim($("#meeting-name input").val());
+		var range_left = $(".range-left").val();
+		var range_right = $(".range-right").val();
+		if (meeting_name.length == 0) {
 			$("#meeting-name input").focus();
 			$("#meeting-name").addClass("has-error");
 			$("#meeting-name-error").removeClass("hidden");
@@ -10,7 +12,7 @@ $(document).ready(function() {
 		} else {
 			$("#meeting-name").removeClass("has-error");
 			$("#meeting-name-error").addClass("hidden");
-			$("#modal-title-insert").html($("#meeting-name input").val());
+			$("#modal-title-insert").html(meeting_name);
 		}				 
 	});
 	
