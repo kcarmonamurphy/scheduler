@@ -105,7 +105,8 @@ function gatherColours(tableId) {
 
 $(document).ready(function() {
 	if (getCookie("visited") == "") {
-		$('.alert-guide').removeClass("hidden");
+		$('#helpTips').modal('show')
+	} else {
 		setCookie("visited", "yes", 30);
 	}
 });

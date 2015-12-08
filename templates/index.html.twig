@@ -33,8 +33,14 @@
 			<li id="hour-interval-half-hour"><a href="#">1 hour intervals on the half hour</a></li>
             <li role="separator" class="divider"></li>
             <li class="active" id="show-hide-weekend"><a href="#">Show weekend</a></li>
+			  
+			  <li role="separator" class="divider"></li>
+            <li id="show-hide-weekend"><a href="#" data-toggle="modal" data-target="#helpTips" class="alert-link">Help</a></li>
+			  
+<!--
             <li role="separator" class="divider"></li>
             <li><a href="#">Import from Google Calendar</a></li>
+-->
           </ul>
         </li>
       </ul>
@@ -49,6 +55,38 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<div class="alert alert-info hidden alert-dismissible alert-guide" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Welcome! It looks like this is your first time here. &nbsp;</strong>
+	<a href="#" data-toggle="modal" data-target="#helpTips" class="alert-link">Take 20 seconds to learn how it works.</a>
+</div>
+
+<!-- Help Tips Modal -->
+
+<div id="helpTips" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">20 second tour</h4>
+      </div>
+      <div class="modal-body">
+		  <p>Scheduler works by comparing your <em>anti-schedule</em> - times when you cannot or don't want to meet - with other group members</p>
+		  <p>Fill out the schedule by clicking either the red or amber plus icons, and "painting" the grid.</p>
+		  <p>The <span class="glyphicon-container glyphicon-container-red active"><a href="#"><span class="glyphicon glyphicon-plus glyphicon-red"></span></a></span> is used to paint "busy" times.</p>
+		  <p>The <span class="glyphicon-container glyphicon-container-amber"><a href="#"><span class="glyphicon glyphicon-plus glyphicon-amber"></span></a></span> paints "inconvenient, but possible" times.</p>
+		  <p>Blank slots are fair game for a meeting.</p>
+		  <p>Right click or Shift+click to unpaint.</p>
+		  <p>The slider controls the window of times your group members will see once you invite them to fill in their anti-schedules</p>
+		  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- Modal -->
 <div class="modal fade" id="sendToInviteesModal" tabindex="-1" role="dialog" aria-labelledby="sendToInviteesModal">
@@ -67,12 +105,12 @@
 		<form>
 			 <div class="form-group">
 			<label for="exampleInputEmail1">Your email address</label>
-			<input type="email" class="form-control" id="email0" value="kevcom@live.ca" placeholder="Your email">
+			<input type="email" class="form-control" id="email0" value="youremail@abc.xyz" placeholder="Your email">
 			</div>
 		  <div class="form-group">
 			  
 			<label for="exampleInputEmail1">Include up to 7 email addresses</label>
-			<div class="form-group"><input type="email" class="form-control" value="kevcom@live.ca" id="email1" placeholder="Email"></div>
+			<div class="form-group"><input type="email" class="form-control" value="inviteeemail@abc.xyz" id="email1" placeholder="Email"></div>
 			  <div class="form-group"><input type="email" class="form-control" id="email2" placeholder="Email"></div>
 			  <div class="form-group"><input type="email" class="form-control" id="email3" placeholder="Email"></div>
 			  <div class="form-group"><input type="email" class="form-control" id="email4" placeholder="Email"></div>

@@ -62,6 +62,7 @@ function validateEmail(el) {
 	}
 	else {
 		$(el).parent(".form-group").addClass("has-error");
+		$(el).parent(".form-group").removeClass("has-success");
 	}
 }
 

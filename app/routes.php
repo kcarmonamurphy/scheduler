@@ -41,7 +41,7 @@ $app->post('/newmeeting', function (Request $request) {
 	$from_email = array_shift($emails);
 	$to_emails = $emails;
 
-    return new Response(var_dump($grid), 201);
+    return new Response($meeting_name, 201);
 });
 
 $app->get('/{id}', function (Silex\Application $app, $id)  { // Add a parameter for an ID in the route, and it will be supplied as argument in the function
