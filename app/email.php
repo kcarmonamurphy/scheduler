@@ -1,49 +1,107 @@
 <?php
 
+require 'vendor/autoload.php';
+Dotenv::load(__DIR__);
+
 
 $url = 'https://api.sendgrid.com/';
 $user = 'USERNAME';
 $pass = '
 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';
 
-$params = array(
-    'api_user'  => $user,
-    'api_key'   => $pass,
-    'to'        => 'example3@sendgrid.com',
-    'subject'   => 'testing from curl',
-    'html'      => '<strong>Hello World!</strong>',
-    'text'      => 'testing body',
-    'from'      => 'kevin@kevcom.ca',
-  );
+$toAddress
+$fromName
 
-$request =  $url.'api/mail.send.json';
+function mailStartEditing($toAddress, $link, $fromName){
+    $message = file_get_contents('templates/begin.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("Everyone has entered their schedule!")
+        ->addSubstitution("%link%", $link)
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
 
-// Generate curl request
-$session = curl_init($request);
-// Tell curl to use HTTP POST
-curl_setopt ($session, CURLOPT_POST, true);
-// Tell curl that this is the body of the POST
-curl_setopt ($session, CURLOPT_POSTFIELDS, $params);
-// Tell curl not to return headers, but do return the response
-curl_setopt($session, CURLOPT_HEADER, false);
-// Tell PHP not to use SSLv3 (instead opting for TLS)
-curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+function mailInviteExists($toAddress, $toName, $link, $fromName){
+    $message = file_get_contents('templates/permit.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("%fromName invited you to an event!")
+        ->addSubstitution("%toName%", $toName)
+        ->addSubstitution("%link%", $link)
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
 
-// obtain response
-$response = curl_exec($session);
-curl_close($session);
+function mailInvitation($toAddress, $link, $fromName){
+    $message = file_get_contents('templates/invitation.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("%fromName invited you to an event!")
+        ->addSubstitution("%link%", $link)
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
 
-// print everything out
-print_r($response);
+function mailEventScheduled($toAddress, $fromName){
+    $message = file_get_contents('templates/organize.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("You just scheduled an event!")
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
 
-//try sending out the response
-try {
-    $sendgrid->send($email);
-} catch(\SendGrid\Exception $e) {
-    echo $e->getCode();
-    foreach($e->getErrors() as $er) {
-        echo $er;
+function mailAccessRequest($toAddress, $toName, $link, $fromName){
+    $message = file_get_contents('templates/permitted.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("%toName% confirmed availability")
+        ->addSubstitution("%toName%", $toName)
+        ->addSubstitution("%link%", $link)
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
+
+function mailRegConfirm($toAddress, $link, $linkNo, $fromName){
+    $message = file_get_contents('templates/confirm.html');
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($toAddress)
+        ->setHtml($message)
+        ->setSubject("Confirm sign up to scheduler")
+        ->addSubstitution("%link%", $link)
+        ->addSubstitution("%linkNo%", $linkNo)
+        ->addSubstitution("%fromName%", $fromName);
+    sendMail($email);
+});
+
+function sendMail($email){
+
+    $sendgrid = new SendGrid($sendgrid_username, $sendgrid_password);
+
+    $email
+        ->setFrom('kevin@kevcom.ca');
+
+
+    //try sending out the response
+    try {
+        $sendgrid->send($email);
+    } catch(\SendGrid\Exception $e) {
+        echo $e->getCode();
+        foreach($e->getErrors() as $er) {
+            echo $er;
+        }
     }
 }
 
