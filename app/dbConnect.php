@@ -7,20 +7,32 @@ $password = "soylent123"; //must have numbers, letters, no spaces, no symbols
 
 
 function createUser($name, $email){
-	$sql = "INSERT INTO User (name, email) VALUES (" . $name . ", " . $email . ")";
-	runSQL($sql);
+	if (checkUser($email) === 0){
+		$sql = "INSERT INTO User (name, email) VALUES (" . $name . ", " . $email . ")";
+		runSQL($sql);
+	}
 }
 function createEvent($emails, $owner){
-	foreach ($emails as $i){
-		$isUser = checkUser($i);
-		//if first element in $emails, $owner = TRUE
-		if ($isUser){
-			//send e-mail
-			$sql = "INSERT INTO Meetings (email, owner) VALUES (" . $i . ", " . $owner . ")";
-			//send e-mail to $isUser;
+
+	foreach ($emails as $i => $email){
+		if ($i ==0){
+			$organizer = "TRUE";
 		}
 		else{
-			$sql = "INSERT INTO Meetings (email, owner) VALUES (" . $i . ", " . $owner . ")";
+			$organizer = "FALSE";
+		}
+		$isUser = checkUser($email);
+		if ($isUser){
+			//send e-mail
+			$sql = "INSERT INTO Attendees (email, owner) VALUES (" . $email . ", " . $organizer . "); SELECT LAST_INSERT_ID();";
+			$link = "http://kevcom.ca/" . runSQL($sql);
+			//send e-mail to $isUser;
+			//$link = "http://kevcom.ca/" . scheduleID
+			mailInviteExists($email, $isUser, $link, $owner);
+		}
+		else{
+			$sql = "INSERT INTO Attendees (email, owner) VALUES (" . $email . ", " . $organizer . "); SELECT LAST_INSERT_ID();";
+			$link = "http://kevcom.ca/" . runSQL($sql);
 		}
 	}
 }
@@ -28,20 +40,28 @@ function buildSchedule(){
 	//joins
 	BIT_OR();
 }
+function getSchedule($eventId){
+	$sql = "SELECT * FROM "
+}
+
 function checkUser($email){
 	//check if $email is in list of users
-	return false;
+	$sql = "SELECT name FROM User WHERE email = " . $email . " LIMIT 1;";
+	$isUser = runSQL($sql);
+	return $isUser;
 }
 function runSQL($sql){
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
-	if ($conn->query($sql) === TRUE) {
-	    echo "Command run successfully";
-	} else {
-	    echo "Error running command: " . $conn->error;
+	if ($conn->connect_error) {
+    	die("Connection failed: " . $conn->connect_error);
 	}
+	$result = $conn->query($sql);
+
+	//return $conn->error;
 	$conn->close();
+	return $result;
 }
 
 ?>
