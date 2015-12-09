@@ -3,14 +3,9 @@
 require 'vendor/autoload.php';
 Dotenv::load(__DIR__);
 
-
-$url = 'https://api.sendgrid.com/';
-$user = 'USERNAME';
-$pass = '
+$api_user = 'oZvyh_LJSDeX5_c9RPvWRQ';
+$api_key = '
 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';
-
-$toAddress
-$fromName
 
 function mailStartEditing($toAddress, $link, $fromName){
     $message = file_get_contents('templates/begin.html');
@@ -88,7 +83,7 @@ function mailRegConfirm($toAddress, $link, $linkNo, $fromName){
 
 function sendMail($email){
 
-    $sendgrid = new SendGrid($sendgrid_username, $sendgrid_password);
+    $sendgrid = new SendGrid($api_user, $api_key);
 
     $email
         ->setFrom('kevin@kevcom.ca');
