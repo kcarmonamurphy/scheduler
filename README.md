@@ -4,10 +4,11 @@ Scheduler
 Schema
 -------
 
-* Meetings: join everyone's schedules and find what spaces are left false
+* Attendees: who has been invited
 	* _email_
 	* _eventId_
 	* owner of event
+* Events: final schedules of each event
 * User: for registered users
 	* _id_
 	* name
