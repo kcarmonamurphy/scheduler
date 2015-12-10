@@ -1,5 +1,8 @@
 <?php
 
+
+use Silex\Application;
+
 require 'vendor/autoload.php';
 Dotenv::load(__DIR__);
 
@@ -87,7 +90,7 @@ function mailRegConfirm($toAddress, $toName, $userId){
 function sendMail($email){
 
     $sendgrid = new SendGrid($api_user, $api_key);
-
+    /*
     $url = 'https://api.sendgrid.com/';
     $request =  $url.'api/mail.send.json';
 
@@ -105,7 +108,10 @@ function sendMail($email){
 
     // obtain response
     $response = curl_exec($session);
-    curl_close($session);
+    curl_close($session);*/
+
+    // send message
+    $response = $sendgrid->send($email);
 
     // print everything out
     print_r($response);

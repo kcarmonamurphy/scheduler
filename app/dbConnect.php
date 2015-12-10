@@ -14,7 +14,7 @@ function createUser($name, $email){
 	}
 }
 function createEvent($emails, $owner){
-
+	//$owner = name of the person who started the event
 	foreach ($emails as $i => $email){
 		if ($i ==0){
 			$organizer = "1";
@@ -49,7 +49,7 @@ function buildSchedule($eventId, $email){
 	}
 	$sql = "UPDATE Events";
 	foreach($columns as $column){
-		$sql .= "SET " . $column . "= (SELECT SUM(" . $column . ") FROM Events WHERE id=" . $eventId . ")|(SELECT SUM(" . $column . ") FROM Schedule WHERE email=" . $userId . "), ";
+		$sql .= "SET " . $column . "= MAX((SELECT SUM(" . $column . ") FROM Events WHERE id=" . $eventId . "),(SELECT SUM(" . $column . ")) FROM Schedule WHERE email=" . $userId . "), ";
 	}
 	$sql .= ";";
 	runSQL($sql);

@@ -19,7 +19,7 @@ echo "Creating Schedule table...\r\n";
 $sql = "CREATE TABLE Schedule ( id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY";
 	for($i = 0; $i < 7; $i++) {
 		for ($j = 0; $j < 48; $j++){
-			$sql .= ", " . $i . '_' . strval($j) . ' BOOL NOT NULL';	//one for each day of the week, every half hour
+			$sql .= ", " . $i . '_' . strval($j) . ' TINYINT(2) NOT NULL';	//one for each day of the week, every half hour
 		}
 	}
 $sql .= ');';
@@ -35,7 +35,7 @@ echo "\r\nCreating Events table...\r\n";
 $sql = "CREATE TABLE Events ( id INT(11) UNSIGNED PRIMARY KEY";
 	for($i = 0; $i < 7; $i++) {
 		for ($j = 0; $j < 48; $j++){
-			$sql .= ", " . $i . '_' . strval($j) . ' BOOL NOT NULL';	//one for each day of the week, every half hour
+			$sql .= ", " . $i . '_' . strval($j) . ' TINYINT(2) NOT NULL';	//one for each day of the week, every half hour
 		}
 	}
 $sql .= ');';
