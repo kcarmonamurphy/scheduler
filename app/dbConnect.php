@@ -8,9 +8,9 @@ $password = "soylent123"; //must have numbers, letters, no spaces, no symbols
 
 function createUser($name, $email){
 	if (checkUser($email) === 0){
-		$sql = "INSERT INTO User (name, email) VALUES (" . $name . ", " . $email . ")";
-		runSQL($sql);
-		mailRegConfirm();
+		$sql = "INSERT INTO User (name, email) VALUES (" . $name . ", " . $email . "); SELECT LAST_INSERT_ID();";
+		$userID = runSQL($sql);
+		mailRegConfirm($email, $name, $userId);
 	}
 }
 function createEvent($emails, $owner){
@@ -40,8 +40,8 @@ function createEvent($emails, $owner){
 }
 function buildSchedule($eventId, $email){
 	//joins
-	$columns = array();
-	//$columns = []; //depends on PHP version
+	$columns = array();	//building an indexer 
+	//$columns = [];	//depends on PHP version
 	for ($i = 0; $i < 7; $i++){
 		for ($j = 0; $j < 48; $j++){
 			$columns[] = strval($i) . "_" . strval($j);
@@ -53,15 +53,18 @@ function buildSchedule($eventId, $email){
 	}
 	$sql .= ";";
 	runSQL($sql);
+	$sql = "SELECT email, name FROM User WHERE email=(SELECT email FROM Attendees WHERE event=" . $eventId . ", owner=1) ;";
+	$owner = runSQL($sql);
+	mailStartEditing($owner[0], $eventId, $owner[1]);	//($email, $eventId, $ownerName)
 }
 
 function updateSchedule($timings, $email){
-	//write to schedule
+	//write to personal schedule
 	$sql = "INSERT INTO Schedule ON DUPLICATE KEY UPDATE ";
 	for ($i = 0; $i < 7; $i++){
 		for ($j = 0; $j < 48; $j++){
-			$index = strval($i) . "_" . strval($j);
-			$sql .= $index . "=" . $timings[i][j] . ", ";
+			$index = strval($i) . "_" . strval($j);			//name of each column
+			$sql .= $index . "=" . $timings[i][j] . ", ";	// 2_13 = T/F
 		}
 	}
 	$sql .= "WHERE email=". $email . ";";
@@ -69,7 +72,7 @@ function updateSchedule($timings, $email){
 }
 
 function getSchedule($eventId){
-	$sql = "SELECT * FROM Events WHERE id = " . $eventId . " LIMIT 1;";
+	$sql = "SELECT * FROM Events WHERE id = " . $eventId . " LIMIT 1;";	//this is run when the schedule is loaded
 	$response = runSQL($sql);
 	$timings;
 	foreach ($response as $i => $available){
@@ -85,7 +88,7 @@ function checkUser($email){
 	//check if $email is in list of users
 	$sql = "SELECT name FROM User WHERE email = " . $email . " LIMIT 1;";
 	$isUser = runSQL($sql);
-	return $isUser;
+	return $isUser;	//returns the name of the user if exists
 }
 function runSQL($sql){
 
@@ -111,6 +114,18 @@ $app->get('/deleteUser/{id}', function ($id)  { // Match the root route (/) and 
             'articles' => $app['articles'], // Supply arguments to be used in the template
         )
     );
+});
+
+$app->get('/{id}', function ($id)  { // Match the root route (/) and supply the application as argument
+    $timings = getSchedule($id);
+
+/*
+    return $app['twig']->render( // Render the page index.html.twig
+        'blog.html.twig',
+        array(
+            'articles' => $app['articles'], // Supply arguments to be used in the template
+        )
+    );*/
 });
 
 ?>

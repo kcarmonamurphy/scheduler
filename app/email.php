@@ -7,8 +7,9 @@ $api_user = 'carmonk';
 $api_key = '!R3S!49QGyM6a*xkmbdFPC89Kj';
 $fromAddress = 'kevin@kevcom.ca'
 
-function mailStartEditing($toAddress, $link, $fromName){
+function mailStartEditing($toAddress, $eventId, $fromName){
     $message = file_get_contents('templates/begin.html');
+    $link = "http://kevcom.ca/" . $eventId;
     $email = new SendGrid\Email();
     $email
         ->addTo($toAddress)
@@ -68,7 +69,7 @@ function mailAccessRequest($toAddress, $toName, $link, $fromName){
     sendMail($email);
 });
 
-function mailRegConfirm($toAddress, $fromName, $userId){
+function mailRegConfirm($toAddress, $toName, $userId){
     $message = file_get_contents('templates/confirm.html');
     $link = "http://kevcom.ca/";
     $linkNo = "http://kevcom.ca/deleteUser/" . $userId;
@@ -79,7 +80,7 @@ function mailRegConfirm($toAddress, $fromName, $userId){
         ->setSubject("Confirm sign up to scheduler")
         ->addSubstitution("%link%", $link)
         ->addSubstitution("%linkNo%", $linkNo)
-        ->addSubstitution("%fromName%", $fromName);
+        ->addSubstitution("%toName%", $toName);
     sendMail($email);
 });
 
