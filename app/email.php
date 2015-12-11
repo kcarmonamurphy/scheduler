@@ -10,30 +10,20 @@ $api_user = 'carmonk';
 $api_key = '!R3S!49QGyM6a*xkmbdFPC89Kj';
 $fromAddress = 'kevin@kevcom.ca'
 
-function mailStartEditing($toAddress, $eventId, $fromName){
+function mailEntered($emails, $eventId, $fromName){     //should be sent to everyone
     $message = file_get_contents('templates/begin.html');
     $link = "http://kevcom.ca/" . $eventId;
-    $email = new SendGrid\Email();
-    $email
-        ->addTo($toAddress)
-        ->setHtml($message)
-        ->setSubject("Everyone has entered their schedule!")
-        ->addSubstitution("%link%", $link)
-        ->addSubstitution("%fromName%", $fromName);
-    sendMail($email);
-});
 
-function mailInviteExists($toAddress, $toName, $link, $fromName){
-    $message = file_get_contents('templates/permit.html');
-    $email = new SendGrid\Email();
-    $email
-        ->addTo($toAddress)
-        ->setHtml($message)
-        ->setSubject("%fromName invited you to an event!")
-        ->addSubstitution("%toName%", $toName)
-        ->addSubstitution("%link%", $link)
-        ->addSubstitution("%fromName%", $fromName);
-    sendMail($email);
+    foreach ($emails as $i) {        
+        $email = new SendGrid\Email();
+        $email
+            ->addTo($i)
+            ->setHtml($message)
+            ->setSubject("Everyone has entered their schedule!")    //description
+            ->addSubstitution("%link%", $link)
+            ->addSubstitution("%fromName%", $fromName);
+        sendMail($email);
+    }
 });
 
 function mailInvitation($toAddress, $link, $fromName){
@@ -42,48 +32,33 @@ function mailInvitation($toAddress, $link, $fromName){
     $email
         ->addTo($toAddress)
         ->setHtml($message)
-        ->setSubject("%fromName invited you to an event!")
+        ->setSubject("%fromName invited you to an event!")      //description
         ->addSubstitution("%link%", $link)
         ->addSubstitution("%fromName%", $fromName);
     sendMail($email);
 });
 
-function mailEventScheduled($toAddress, $fromName){
+function mailEventScheduled($toAddress, $link, $fromName){
     $message = file_get_contents('templates/organize.html');
     $email = new SendGrid\Email();
     $email
         ->addTo($toAddress)
         ->setHtml($message)
-        ->setSubject("You just scheduled an event!")
+        ->setSubject("You just scheduled an event!")            //description
         ->addSubstitution("%fromName%", $fromName);
     sendMail($email);
 });
 
-function mailAccessRequest($toAddress, $toName, $link, $fromName){
+function mailRSVP($toAddress, $toName, $link, $fromName){
     $message = file_get_contents('templates/permitted.html');
     $email = new SendGrid\Email();
     $email
         ->addTo($toAddress)
         ->setHtml($message)
-        ->setSubject("%toName% confirmed availability")
+        ->setSubject("%toName% confirmed availability")         //description
         ->addSubstitution("%toName%", $toName)
         ->addSubstitution("%link%", $link)
         ->addSubstitution("%fromName%", $fromName);
-    sendMail($email);
-});
-
-function mailRegConfirm($toAddress, $toName, $userId){
-    $message = file_get_contents('templates/confirm.html');
-    $link = "http://kevcom.ca/";
-    $linkNo = "http://kevcom.ca/deleteUser/" . $userId;
-    $email = new SendGrid\Email();
-    $email
-        ->addTo($toAddress)
-        ->setHtml($message)
-        ->setSubject("Confirm sign up to scheduler")
-        ->addSubstitution("%link%", $link)
-        ->addSubstitution("%linkNo%", $linkNo)
-        ->addSubstitution("%toName%", $toName);
     sendMail($email);
 });
 

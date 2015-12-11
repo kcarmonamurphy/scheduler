@@ -38,13 +38,17 @@ $app->post('/newmeeting', function (Request $request) {
 	$top_range = $request->get('top_range');
 	$bottom_range = $request->get('bottom_range');
 	
+    $owner = $request->get('owner');
+
 	$from_email = array_shift($emails);
 	$to_emails = $emails;
 
-    return new Response($meeting_name, 201);
+    $eventId = createEvent($emails, $owner, $grid);
+
+    return new Response($eventId, 201);
 });
 
-$app->get('/{id}', function (Silex\Application $app, $id)  { // Add a parameter for an ID in the route, and it will be supplied as argument in the function
+$app->get('/blog/{id}', function (Silex\Application $app, $id)  { // Add a parameter for an ID in the route, and it will be supplied as argument in the function
     if (!array_key_exists($id, $app['articles'])) {
         $app->abort(404, 'The article could not be found');
     }

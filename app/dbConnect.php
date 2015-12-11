@@ -6,73 +6,88 @@ $password = "soylent123"; //must have numbers, letters, no spaces, no symbols
 //$emails = array()
 
 
-function createUser($name, $email){
-	if (checkUser($email) === 0){
-		$sql = "INSERT INTO User (name, email) VALUES (" . $name . ", " . $email . "); SELECT LAST_INSERT_ID();";
-		$userID = runSQL($sql);
-		mailRegConfirm($email, $name, $userId);
-	}
-}
-function createEvent($emails, $owner){
+function createEvent($emails, $owner, $timings){
 	//$owner = name of the person who started the event
+
+	//save $timings and create $eventId
+	$sql =  "INSERT INTO Events (";	//0_0,...,6_47
+
+	//columns
+	for ($i = 0; $i < 7; $i++){
+		for ($j = 0; $j < 48; $j++){
+			$columns = strval($i) . "_" . strval($j);
+			$sql .= $column . ", ";
+		}
+	}
+
+	$sql .= ") VALUES ("			//val[0][0],...,val[6][47]
+
+	for ($i = 0; $i < 7; $i++){
+		for ($j = 0; $j < 48; $j++){
+			$columns = strval($i) . "_" . strval($j);
+			$sql .= $timings[$i][$j] . ", ";
+		}
+	}
+
+	$sql .= "); SELECT LAST_INSERT_ID()";	//TODO INSERT
+	$eventId = runSQL($sql);
+
+	//save attendees
 	foreach ($emails as $i => $email){
-		if ($i ==0){
-			$organizer = "1";
+		$organizer = 0;						//will hold owner's name
+		$link = "http://kevcom.ca/" . $eventId
+		$hashId = 0;						//hash zeroed after each confirmation
+		if ($i === 0){						//owner has already entered schedule, so hash remains 0
+			$organizer = $owner;
+			mailEventScheduled($email, $link, $owner);
 		}
 		else{
-			$organizer = "0";
-		}
-		$isUser = checkUser($email);
-		if ($isUser){
-			//send e-mail
-			$sql = "INSERT INTO Attendees (email, owner) VALUES (" . $email . ", " . $organizer . "); SELECT LAST_INSERT_ID();";
-			$link = "http://kevcom.ca/" . runSQL($sql);
-			//send e-mail to $isUser;
-			//$link = "http://kevcom.ca/" . scheduleID
-			mailInviteExists($email, $isUser, $link, $owner);
-		}
-		else{
-			$sql = "INSERT INTO Attendees (email, owner) VALUES (" . $email . ", " . $organizer . "); SELECT LAST_INSERT_ID();";
-			$link = "http://kevcom.ca/" . runSQL($sql);
+			//https://stackoverflow.com/questions/2293684/what-is-the-best-way-to-create-a-random-hash-string
+			$hashId = bin2hex(mcrypt_create_iv(15, MCRYPT_DEV_URANDOM));	//renamed hash--> hashId because I fear hash is a keyword
+			$link .= "/" . $hashId;
 			mailInvitation($email, $link, $owner);
 		}
+		
+		$sql = "INSERT INTO Attendees (eventId, email, owner, hashId) VALUES (" $eventId . ", " . $email . ", " . $organizer . ", " . $hashId . ");";
+		runSQL($sql);
 	}
+	return $eventId;
+	//TODO redirect to /{eventId}
 }
-function buildSchedule($eventId, $email){
-	//joins
-	$columns = array();	//building an indexer 
-	//$columns = [];	//depends on PHP version
+function buildSchedule($eventId, $hashId, $timings){
+	//combine $timings with current schedule
+
+	$sql = "UPDATE Events SET ";
+
 	for ($i = 0; $i < 7; $i++){
 		for ($j = 0; $j < 48; $j++){
-			$columns[] = strval($i) . "_" . strval($j);
+			$columns = strval($i) . "_" . strval($j);
+			$sql .= $column . "= MAX((SELECT " . $column . " FROM Events WHERE id=" . $eventId . "), " . $timings[$i][$j] ."), ";
 		}
 	}
-	$sql = "UPDATE Events";
-	foreach($columns as $column){
-		$sql .= "SET " . $column . "= MAX((SELECT SUM(" . $column . ") FROM Events WHERE id=" . $eventId . "),(SELECT SUM(" . $column . ")) FROM Schedule WHERE email=" . $userId . "), ";
-	}
+
 	$sql .= ";";
 	runSQL($sql);
-	$sql = "SELECT email, name FROM User WHERE email=(SELECT email FROM Attendees WHERE event=" . $eventId . ", owner=1) ;";
-	$owner = runSQL($sql);
-	mailStartEditing($owner[0], $eventId, $owner[1]);	//($email, $eventId, $ownerName)
-}
 
-function updateSchedule($timings, $email){
-	//write to personal schedule
-	$sql = "INSERT INTO Schedule ON DUPLICATE KEY UPDATE ";
-	for ($i = 0; $i < 7; $i++){
-		for ($j = 0; $j < 48; $j++){
-			$index = strval($i) . "_" . strval($j);			//name of each column
-			$sql .= $index . "=" . $timings[i][j] . ", ";	// 2_13 = T/F
-		}
-	}
-	$sql .= "WHERE email=". $email . ";";
+	$sql = "UPDATE Attendees SET hashId=0 WHERE hashId=" . $hashId . ";";
 	runSQL($sql);
+
+	$sql = "SELECT email, owner FROM Attendees WHERE event=" . $eventId . ", owner!=0) ;";
+	$owner = runSQL($sql);
+	mailRSVP($owner[0], $eventId, $owner[1]);	//($email, $eventId, $ownerName)
+
+	$sql = "SELECT hashId FROM Attendees WHERE hashId !=0 LIMIT 1;";	//check to see if anyone hasn't confirmed
+	$confirmed = runSQL($sql);
+	if ($confirmed == 0){				//everyone has confirmed; maybe I should use (!$confirmed)
+		$sql = "SELECT email FROM Attendees WHERE event=" . $eventId . ";";
+		$emails = runSQL($sql);
+		mailEntered($emails, $eventId, $owner[1]);
+	}
+	//TODO redirect to /{eventId}
 }
 
 function getSchedule($eventId){
-	$sql = "SELECT * FROM Events WHERE id = " . $eventId . " LIMIT 1;";	//this is run when the schedule is loaded
+	$sql = "SELECT * FROM Events WHERE id = " . $eventId . " LIMIT 1;";	//this is run when the event page is loaded
 	$response = runSQL($sql);
 	$timings;
 	foreach ($response as $i => $available){
@@ -84,12 +99,6 @@ function getSchedule($eventId){
 	return $timings;
 }
 
-function checkUser($email){
-	//check if $email is in list of users
-	$sql = "SELECT name FROM User WHERE email = " . $email . " LIMIT 1;";
-	$isUser = runSQL($sql);
-	return $isUser;	//returns the name of the user if exists
-}
 function runSQL($sql){
 
 	// Create connection
@@ -104,19 +113,7 @@ function runSQL($sql){
 	return $result;
 }
 
-$app->get('/deleteUser/{id}', function ($id)  { // Match the root route (/) and supply the application as argument
-    $sql = "DELETE FROM User WHERE id = " . $id . " LIMIT 1;";
-    runSQL($sql);
-
-    return $app['twig']->render( // Render the page index.html.twig
-        'blog.html.twig',
-        array(
-            'articles' => $app['articles'], // Supply arguments to be used in the template
-        )
-    );
-});
-
-$app->get('/{id}', function ($id)  { // Match the root route (/) and supply the application as argument
+$app->get('/{eventId}', function ($id)  { // Match the root route (/) and supply the application as argument
     $timings = getSchedule($id);
 
 /*
@@ -127,5 +124,29 @@ $app->get('/{id}', function ($id)  { // Match the root route (/) and supply the 
         )
     );*/
 });
+
+$app->get('/{eventId}/{hashId}', function (Silex\Application $app, $eventId, $hashId)  { // Match the root route (/) and supply the application as argument
+
+	if ($hashId == 0){						//user has already confirmed
+    	$timings = getSchedule($eventId);	//redirect to event page
+    }
+    else{
+    	//buildSchedule($eventId, $hashId, $timings)
+        return $app['twig']->render( // Render the page index.html.twig
+        	'guest.html.twig',
+			array(
+				'daysOfWeek' => $app['daysOfWeek'],
+				'timeSlots' => $app['timeSlots'],
+			)
+    	);
+    }
+
+$app->post('/merge2event', function(Request $request){
+	$eventId = $request->get('eventId');
+	$hashId = $request->get('hashId');
+	$timings = array($request->get('daysOfWeek'), $request->get('timeSlots'));
+	buildSchedule($eventId, $hashId, $timings);
+});
+
 
 ?>
