@@ -69,16 +69,17 @@ function buildSchedule($eventId, $hashId, $timings){
 	$sql .= ";";
 	runSQL($sql);
 
-	$sql = "UPDATE Attendees SET hashId=0 WHERE hashId=" . $hashId . ";";
+	$sql = "UPDATE Attendees SET hashId=0 WHERE hashId=" . $hashId . ";";	//set user as confirmed
 	runSQL($sql);
 
+	//get info to mail to people
 	$sql = "SELECT email, owner FROM Attendees WHERE event=" . $eventId . ", owner!=0) ;";
 	$owner = runSQL($sql);
-	mailRSVP($owner[0], $eventId, $owner[1]);	//($email, $eventId, $ownerName)
+	mailRSVP($owner[0], $eventId, $owner[1]);		//($email, $eventId, $ownerName)
 
 	$sql = "SELECT hashId FROM Attendees WHERE hashId !=0 LIMIT 1;";	//check to see if anyone hasn't confirmed
 	$confirmed = runSQL($sql);
-	if ($confirmed == 0){				//everyone has confirmed; maybe I should use (!$confirmed)
+	if ($confirmed == 0){							//everyone has confirmed; maybe I should use (!$confirmed)
 		$sql = "SELECT email FROM Attendees WHERE event=" . $eventId . ";";
 		$emails = runSQL($sql);
 		mailEntered($emails, $eventId, $owner[1]);
@@ -116,13 +117,16 @@ function runSQL($sql){
 $app->get('/{eventId}', function ($id)  { // Match the root route (/) and supply the application as argument
     $timings = getSchedule($id);
 
-/*
     return $app['twig']->render( // Render the page index.html.twig
-        'blog.html.twig',
-        array(
-            'articles' => $app['articles'], // Supply arguments to be used in the template
-        )
-    );*/
+    	'event.html.twig',
+    	//TODO pass grid array
+    	$timings = getSchedule($id);
+		array(			
+			'grid' => $timings,
+			'daysOfWeek' => $app['daysOfWeek'],
+			'timeSlots' => $app['timeSlots'],
+		)
+	);
 });
 
 $app->get('/{eventId}/{hashId}', function (Silex\Application $app, $eventId, $hashId)  { // Match the root route (/) and supply the application as argument
@@ -137,6 +141,8 @@ $app->get('/{eventId}/{hashId}', function (Silex\Application $app, $eventId, $ha
 			array(
 				'daysOfWeek' => $app['daysOfWeek'],
 				'timeSlots' => $app['timeSlots'],
+				'eventId' => $eventId,
+				'hashId' => $hashId,//merge2event with eventId, hashId
 			)
     	);
     }
@@ -144,7 +150,7 @@ $app->get('/{eventId}/{hashId}', function (Silex\Application $app, $eventId, $ha
 $app->post('/merge2event', function(Request $request){
 	$eventId = $request->get('eventId');
 	$hashId = $request->get('hashId');
-	$timings = array($request->get('daysOfWeek'), $request->get('timeSlots'));
+	$timings = $request->get('grid');
 	buildSchedule($eventId, $hashId, $timings);
 });
 
