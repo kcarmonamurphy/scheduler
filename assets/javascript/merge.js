@@ -1,5 +1,5 @@
-function submit() {
-	console.log("submit");
+function merge() {
+	console.log("merge");
 	
 	var meeting_name = $("#meeting-name input").val();
 	var emails = new Array();
@@ -34,11 +34,11 @@ function submit() {
 		owner: owner,
 		emails: emails,
 		current_table: window.current_table,
-	}
+	};
 	
 	$.ajax({
 		type: "POST",
-		url: "/newmeeting",
+		url: "/merge2event",
 		success: function(data) {
 		  $("#sendToInviteesModal .modal-body").html(data);
 		  eventId = data['eventId'];
@@ -49,4 +49,5 @@ function submit() {
 		},
  		data: object,
 	});
+	window.location = "";
 }

@@ -1,17 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-<div id="meeting-name-error" class="alert alert-danger hidden" role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  <span class="sr-only">Please enter a meeting name</span>
-	  Please enter a meeting name
-</div>
-<div id="meeting-owner-error" class="alert alert-danger hidden" role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  <span class="sr-only">Please enter your name</span>
-	  Please enter your name
-</div>
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -51,13 +40,7 @@
       </ul>
 		
       <form class="navbar-form navbar-right">
-        <div class="form-group" id="meeting-name">
-          <input type="text" class="form-control" placeholder="Meeting Name">
-        </div>
-        <div class="form-group" id="meeting-owner">
-          <input type="text" class="form-control" placeholder="Your Name">
-        </div>
-		  <button id="sendToInvitees" class="btn btn-primary" data-toggle="modal" data-target="#sendToInviteesModal">Share with Invitees</button>
+		  <button id="mergeToEvent" class="btn btn-primary" data-toggle="modal" data-target="#mergeToEvent">Submit your schedule</button>
       </form>
 		
     </div><!-- /.navbar-collapse -->
@@ -96,56 +79,12 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- Modal -->
-<div class="modal fade" id="sendToInviteesModal" tabindex="-1" role="dialog" aria-labelledby="sendToInviteesModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Share "<span id="modal-title-insert"></span>" with others</h4>
-      </div>
-      <div class="modal-body">
-        <div id="form-error-email" class="alert alert-danger hidden" role="alert">
-		  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-		  <span class="sr-only">Error:</span>
-		  You must enter your email address, as well as at least one other...
-		</div>
-		  
-		<form>
-			 <div class="form-group">
-			<label for="exampleInputEmail1">Your email address</label>
-				 <p>An email link will be sent to you, allowing you to keep tabs on your invitees.</p>
-			<input type="email" class="form-control" id="email0" value="youremail@abc.xyz" placeholder="Your email">
-			</div>
-		  <div class="form-group">
-			  
-			<label for="exampleInputEmail1">Include up to 7 email addresses</label>
-			  <p> Each invitee will get an invitation to submit their anti-schedules.</p>
-			<div class="form-group"><input type="email" class="form-control" value="inviteeemail@abc.xyz" id="email1" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email2" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email3" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email4" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email5" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email6" placeholder="Email"></div>
-			  <div class="form-group"><input type="email" class="form-control" id="email7" placeholder="Email"></div>
-		  </div>
-			<p></p>
-		</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="sendInviteesSubmit" class="btn btn-primary">Send</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="slider-row">
-<div class="range-left"></div>
+<div class="range-left">-</div>
 <div class="slider-container">
 <div id="slider-range"></div>
 </div>
-<div class="range-right"></div>
+<div class="range-right">-</div>
 	</div>
 
 <table id="table-half-hour" class="half-cell noselect">

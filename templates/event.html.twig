@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Scheduler</a>
+</nav>
+
+<div class="alert alert-info hidden alert-dismissible alert-guide" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Welcome! It looks like this is your first time here. &nbsp;</strong>
+	<a href="#" data-toggle="modal" data-target="#helpTips" class="alert-link">Take 20 seconds to learn how it works.</a>
+</div>
+
+<div class="slider-row">
+<div class="range-left">-</div>
+<div class="slider-container">
+<div id="slider-range"></div>
+</div>
+<div class="range-right">-</div>
+	</div>
+
+<table id="table-half-hour" class="half-cell noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
+		{% endfor %}
+	</tr>
+	{% for time in timeSlots %}
+	<tr class="time-slot-row time-slot{{loop.index-1}}" >
+		<td class="time-slot noselect">{{ time }}</td>
+		{% for day in daysOfWeek %}
+			<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+<table id="table-hour-on-hour" class="full-cell noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
+		{% endfor %}
+	</tr>
+	{% for time in timeSlots %}
+		{% if (loop.index-1) is divisibleby(2) %}
+			<tr class="time-slot-row time-slot{{loop.index-1}}" >
+				<td class="time-slot noselect">{{ time }}</td>
+				{% for day in daysOfWeek %}
+					<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
+				{% endfor %}
+			</tr>
+		{% endif %}
+	{% endfor %}
+</table>
+
+<table id="table-hour-on-half-hour" class="full-cell noselect">
+	<tr class="days-of-week">
+		<th>SCHED</th>
+		{% for day in daysOfWeek %}
+			<th class="day">{{ day }}</th>
+		{% endfor %}
+	</tr>
+	{% for time in timeSlots %}
+		{% if loop.index is divisibleby(2) %}
+			<tr class="time-slot-row time-slot{{loop.index-1}}" >
+				<td class="time-slot noselect">{{ time }}</td>
+				{% for day in daysOfWeek %}
+					<td data-time-slot="{{loop.parent.loop.index-1}}" data-day="{{loop.index-1}}" class="time-cell"></td>
+				{% endfor %}
+			</tr>
+		{% endif %}
+	{% endfor %}
+</table>
+{% endblock %}
